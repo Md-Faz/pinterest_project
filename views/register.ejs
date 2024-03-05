@@ -1,0 +1,36 @@
+<% include ./partials/header.ejs%>
+
+<div class="w-full h-screen bg-gray-200 flex items-center justify-center">
+  <div class="h-[60vh] w-96 bg-white px-6 py-5 rounded-lg">
+    <h1 class="text-center px-2 py-3 text-3xl font-bold">Create an account</h1>
+    <form action="/register" method="post" class="py-4">
+      <input
+        class="mt-5 w-full border-2 border-gray-300 rounded-lg"
+        type="text"
+        name="username"
+        placeholder="Username"
+      />
+      <input
+        class="mt-5 w-full border-2 border-gray-300 rounded-lg"
+        type="email"
+        name="email"
+        placeholder="Email"
+      />
+      <input
+        class="mt-5 w-full border-2 border-gray-300 rounded-lg"
+        type="password"
+        name="password"
+        placeholder="Password"
+      />
+      <br />
+      <input
+        class="w-full my-6 px-3 py-2 bg-red-600 text-white rounded-full"
+        type="submit"
+        value="Sign Up"
+      />
+      <a class="text-blue-800" href="/">Already have an account? Login.</a>
+    </form>
+  </div>
+</div>
+
+<% include ./partials/footer.ejs%>
