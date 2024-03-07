@@ -21,7 +21,7 @@ app.use(expressSession({
   resave: false,
   saveUninitialized: false,
   secret: "pin"
-}))
+}));
 //this is nothing but saving data on server, this is creating sessions, this is a middleware
 
 app.use(passport.initialize());
