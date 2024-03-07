@@ -1,14 +1,20 @@
-<% include ./partials/header.ejs%>
+<% include ./partials/header.ejs%> <% include ./partials/navbar.ejs%>
 
-<div class="bg-zinc-800 pt-24 min-h-screen w-full text-white">
-  <form hidden id="uploadform" action="/fileupload">
+<div class="bg-zinc-800 pt-24 h-full w-full text-white">
+  <form
+    hidden
+    id="fileupload"
+    action="/fileupload"
+    method="post"
+    enctype="multipart/form-data"
+  >
     <input type="file" name="image" />
   </form>
   <div class="flex flex-col items-center justify-center">
-    <div class="relative bo">
+    <div class="relative overflow-hidden">
       <img
-        class="h-28 w-28 rounded-full bg-white border-4 border-sky-400"
-        src="https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg"
+        class="h-28 w-28 rounded-full bg-white border-4 border-white object-cover"
+        src="/images/uploads/<%=user.profileImage %>"
         alt="profile image"
       />
       <span
@@ -18,39 +24,40 @@
         edit
       </span>
     </div>
-    <h1 class="mt-5 text-4xl">Faizan</h1>
-    <h3 class="text-xl">@faizan</h3>
+    <h1 class="mt-5 text-4xl"><%=user.fullname%></h1>
+    <h3 class="text-xl">@<%=user.username%></h3>
     <br />
     <a href="/edit" class="px-10 py-3 bg-zinc-600 rounded-full text-sm">Edit</a>
-    <button class="px-10 py-3 mt-5 rounded-xl text-white bg-red-700 text-lg">
+    <a
+      href="/add"
+      class="px-10 py-3 mt-5 rounded-xl text-white bg-red-700 text-lg"
+    >
       Add New Pin
-    </button>
+    </a>
   </div>
 
   <div class="cards flex flex-wrap gap-10 px-10 mt-10">
     <div>
       <img
         class="w-56 h-40 bg-white rounded-lg object-cover"
-        src="https://img.freepik.com/premium-photo/close-up-very-colorful-abstract-painting-dark-background-generative-ai_900775-39570.jpg?size=338&ext=jpg&ga=GA1.1.386372595.1697932800&semt=ais"
+        src="/images/uploads/<%=user?.posts[0]?.image%>"
       />
-      <h3 class="mt-4 text-xl">Card Name</h3>
-      <h5 class="text-gray-300 text-sm">10 Pins</h5>
-    </div>
-    <div>
-      <img
-        class="w-56 h-40 bg-white rounded-lg object-cover"
-        src="https://cache.desktopnexus.com/thumbseg/2394/2394689-bigthumbnail.jpg"
-      />
-      <h3 class="mt-4 text-xl">Card Name</h3>
-      <h5 class="text-gray-300 text-sm">10 Pins</h5>
+      <a href="/show/posts" class="inline-block mt-4 text-xl">Your pins
+      <h5 class="text-gray-300 text-sm"><%=user.posts.length%> Pins</h5>
     </div>
   </div>
 </div>
 
 <script>
   document.querySelector("#uploadicon").addEventListener("click", function () {
-    document.querySelector("#uploadform input").click();
+    document.querySelector("#fileupload input").click();
   });
+
+  document
+    .querySelector("#fileupload input")
+    .addEventListener("change", function () {
+      document.querySelector("#fileupload").submit();
+    });
 </script>
 
 <% include ./partials/footer.ejs%>
