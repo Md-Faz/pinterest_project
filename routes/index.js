@@ -6,7 +6,6 @@ const passport = require('passport');
 const localStrategy = require('passport-local');
 const upload = require('./multer');
 
-
 passport.use(new localStrategy(userModel.authenticate()));
 
 router.get('/', function (req, res, next) {
@@ -32,11 +31,22 @@ router.get('/show/posts', isLoggedIn, async function (req, res, next) {
   res.render('show', { user });
 });
 
+router.get('/feed', isLoggedIn, async function (req, res, next) {
+  const user = await userModel
+    .findOne({ username: req.session.passport.user })
+  //by this you can only get the logged in user
+  const posts = await postModel.find().populate("user")
+
+  res.render("feed", {user, posts});
+});
+
 
 router.get('/add', isLoggedIn, async function (req, res, next) {
   const user = await userModel.findOne({ username: req.session.passport.user });//this pulls out the data of the specific user that is logged in, 
   res.render('add', { user });
 });
+
+
 
 router.post('/createpost', isLoggedIn, upload.single("postimage"), async function (req, res, next) {
   const user = await userModel.findOne({ username: req.session.passport.user });
@@ -50,7 +60,6 @@ router.post('/createpost', isLoggedIn, upload.single("postimage"), async functio
   await user.save();
   res.redirect("/profile");
 });
-
 
 //uploading file and linking with user model
 router.post('/fileupload', isLoggedIn, upload.single("image"), async function (req, res, next) {
